@@ -186,3 +186,88 @@
 .price-preview:last-of-type {
   border-bottom: none;
 }
+
+/* Dark theme component styles - Less Dark */
+[data-theme="dark"] .ingredient-item {
+  background: var(--surface-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .ingredient-item:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .ingredient-item select,
+[data-theme="dark"] .ingredient-item input {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .ingredient-item select:focus,
+[data-theme="dark"] .ingredient-item input:focus {
+  border-color: var(--primary-color);
+  background: var(--hover-bg);
+  box-shadow: 0 0 0 3px rgba(255, 155, 184, 0.2);
+}
+
+[data-theme="dark"] .recipe-ingredients {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .recipe-ingredients h4 {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .add-ingredients-buttons {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .cost-summary {
+  background: linear-gradient(135deg, var(--surface-bg) 0%, var(--card-bg) 100%);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .profit-section {
+  background: var(--surface-bg);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .profit-section h4 {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .profit-controls label {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .profit-controls small {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .profit-summary {
+  background: var(--card-bg);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .profit-summary p,
+[data-theme="dark"] .profit-summary h5 {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .profit-input input {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .price-preview {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .rounded-indicator {
+  color: var(--success-color);
+}

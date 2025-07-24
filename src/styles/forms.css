@@ -211,3 +211,94 @@
   color: var(--success-color);
   font-weight: 500;
 }
+
+/* Dark theme form styles - Less Dark */
+[data-theme="dark"] .form-section {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .form-section h3 {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .form-group label {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+  background: var(--surface-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus,
+[data-theme="dark"] .form-group textarea:focus {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(255, 155, 184, 0.2);
+}
+
+[data-theme="dark"] .form-group input::placeholder {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .form-group select option {
+  background: var(--surface-bg);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .input-icon {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .form-group:focus-within .input-icon {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .number-btn {
+  background: var(--surface-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .number-btn:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .rounding-controls {
+  background: var(--surface-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .checkbox-label {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .checkmark {
+  background: var(--hover-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .form-actions {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .alert-success {
+  background: rgba(144, 217, 150, 0.15);
+  color: var(--success-color);
+  border-color: rgba(144, 217, 150, 0.3);
+}
+
+[data-theme="dark"] .alert-error {
+  background: rgba(255, 138, 138, 0.15);
+  color: var(--danger-color);
+  border-color: rgba(255, 138, 138, 0.3);
+}

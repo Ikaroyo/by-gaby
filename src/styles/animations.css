@@ -19,10 +19,40 @@
   }
 }
 
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    text-shadow: 
+      0 0 5px rgba(248, 165, 194, 0.3),
+      0 0 10px rgba(248, 165, 194, 0.2),
+      0 0 15px rgba(248, 165, 194, 0.1);
+  }
+  50% {
+    text-shadow: 
+      0 0 10px rgba(248, 165, 194, 0.5),
+      0 0 20px rgba(248, 165, 194, 0.4),
+      0 0 30px rgba(177, 156, 217, 0.3);
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
 
 .slide-up {
   animation: slideUp 0.5s ease-out;
+}
+
+/* Special sparkle animation for special occasions */
+.brand-cursive.sparkle {
+  animation: sparkle 2s ease-in-out infinite;
 }

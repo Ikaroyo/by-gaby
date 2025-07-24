@@ -33,7 +33,7 @@
   .nav {
     padding: 1rem;
     margin-bottom: 1rem;
-    flex-direction: row;
+    flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
@@ -54,6 +54,28 @@
     flex-direction: row;
     gap: 0.5rem;
     font-size: 0.875rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-links span {
+    order: 1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .theme-toggle {
+    order: 2;
+  }
+
+  .nav-links button:last-child {
+    order: 3;
+  }
+
+  /* Auth actions mobile */
+  .auth-actions {
+    justify-content: center;
+    margin-bottom: 1.5rem;
   }
 
   /* Stats Grid - Mobile */
@@ -77,6 +99,7 @@
 
   .stat-number {
     font-size: 1.125rem;
+    font-weight: 700;
   }
 
   .stat-label {
@@ -741,4 +764,37 @@
 
 .checkbox-label {
   font-size: 0.875rem;
+}
+
+/* Dark theme mobile styles - Less Dark */
+[data-theme="dark"] .mobile-item {
+  background: var(--surface-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .mobile-item:hover {
+  background: var(--hover-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .mobile-item-header {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .mobile-item-header h4 {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .mobile-label {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .mobile-value {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .mobile-inline-input {
+  background: var(--hover-bg) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--text-color) !important;
 }

@@ -6,7 +6,7 @@
   line-height: 1.6;
   font-weight: 400;
   
-  /* Bakery-themed pastel color palette */
+  /* Bakery-themed pastel color palette - Light Mode */
   --primary-color: #f8a5c2;
   --primary-hover: #f487a8;
   --primary-light: #fde2eb;
@@ -21,14 +21,14 @@
   --accent-color: #b19cd9;
   --accent-hover: #9b7bc9;
   
-  /* Soft pastels */
+  /* Soft pastels - Light Mode */
   --cream: #fef9f3;
   --blush: #fdf2f8;
   --lavender: #f5f3ff;
   --mint: #f0fdf4;
   --peach: #fff7ed;
   
-  /* Neutral colors - softer and warmer */
+  /* Neutral colors - Light Mode */
   --gray-50: #fefefe;
   --gray-100: #fafafa;
   --gray-200: #f5f5f5;
@@ -40,7 +40,7 @@
   --gray-800: #262626;
   --gray-900: #171717;
   
-  /* Background and text */
+  /* Background and text - Light Mode */
   --bg-color: var(--cream);
   --text-color: var(--gray-800);
   --text-muted: var(--gray-600);
@@ -69,6 +69,61 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* Dark Theme Variables - Improved */
+[data-theme="dark"] {
+  /* Enhanced bakery-themed colors for dark mode */
+  --primary-color: #ff9bb8;
+  --primary-hover: #ff7aa3;
+  --primary-light: #4d2a35;
+  --secondary-color: #ffc966;
+  --secondary-hover: #ffb84d;
+  --success-color: #90d996;
+  --success-hover: #7acf82;
+  --danger-color: #ff8a8a;
+  --danger-hover: #ff6b6b;
+  --warning-color: #ffd480;
+  --warning-hover: #ffcc66;
+  --accent-color: #c695d4;
+  --accent-hover: #b87fc7;
+  
+  /* Warmer dark pastels */
+  --cream: #1c1c1e;
+  --blush: #2c2025;
+  --lavender: #252139;
+  --mint: #1f2d20;
+  --peach: #36251a;
+  
+  /* Better contrast neutral colors */
+  --gray-50: #ffffff;
+  --gray-100: #f2f2f2;
+  --gray-200: #e6e6e6;
+  --gray-300: #cccccc;
+  --gray-400: #b3b3b3;
+  --gray-500: #999999;
+  --gray-600: #808080;
+  --gray-700: #666666;
+  --gray-800: #4d4d4d;
+  --gray-900: #333333;
+  
+  /* Enhanced surface colors */
+  --card-bg: #2d2d30;
+  --surface-bg: #3a3a3d;
+  --border-color: #555558;
+  --hover-bg: #424245;
+  
+  /* Better readability colors */
+  --bg-color: #1c1c1e;
+  --text-color: #f2f2f2;
+  --text-muted: #b8b8b8;
+  --text-secondary: #999999;
+  
+  /* Enhanced shadows with warm tints */
+  --shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4), 0 2px 8px -2px rgba(255, 155, 184, 0.1);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5), 0 4px 12px -4px rgba(255, 155, 184, 0.15);
+  --shadow-lg: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 8px 16px -8px rgba(255, 155, 184, 0.2);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -76,16 +131,84 @@
 }
 
 /* Font classes */
+/* Cursive font class for "By Gaby" */
 .cursive-text {
   font-family: 'Dancing Script', cursive !important;
   font-weight: 600 !important;
   font-style: normal !important;
 }
 
+/* Main brand font class for "A Hornear" */
 .brand-main-font {
   font-family: 'Poppins', serif !important;
   font-weight: 700 !important;
   letter-spacing: 0.02em !important;
+}
+
+/* Shine effect for cursive text */
+.brand-cursive {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-cursive::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 30%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.8) 70%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateX(-100%);
+  transition: transform 0.8s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand-cursive:hover::after {
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+.brand-cursive:hover {
+  text-shadow: 
+    0 0 5px rgba(248, 165, 194, 0.3),
+    0 0 10px rgba(248, 165, 194, 0.2),
+    0 0 15px rgba(248, 165, 194, 0.1);
+}
+
+/* Dark theme shine effect */
+[data-theme="dark"] .brand-cursive::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 30%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.6) 70%,
+    transparent 100%
+  );
+}
+
+[data-theme="dark"] .brand-cursive:hover {
+  text-shadow: 
+    0 0 5px rgba(244, 143, 177, 0.4),
+    0 0 10px rgba(244, 143, 177, 0.3),
+    0 0 15px rgba(244, 143, 177, 0.2);
 }
 
 body {
@@ -95,6 +218,8 @@ body {
   background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 30%, var(--lavender) 70%, var(--mint) 100%);
   background-attachment: fixed;
   position: relative;
+  transition: background 0.3s ease, color 0.3s ease;
+  color: var(--text-color);
 }
 
 body::before {
@@ -110,6 +235,17 @@ body::before {
     radial-gradient(circle at 40% 40%, rgba(177, 156, 217, 0.1) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 30%, var(--lavender) 70%, var(--mint) 100%);
+}
+
+[data-theme="dark"] body::before {
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 155, 184, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 201, 102, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(198, 149, 212, 0.08) 0%, transparent 50%);
 }
 
 #root {

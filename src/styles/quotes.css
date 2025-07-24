@@ -58,6 +58,43 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.business-info .brand-cursive::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.6) 75%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateX(-100%);
+  transition: transform 0.7s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.business-info .brand-cursive:hover::after {
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+.business-info .brand-cursive:hover {
+  transform: scale(1.03);
 }
 
 .business-tagline {
@@ -275,6 +312,43 @@
   font-family: 'Dancing Script', cursive;
   color: var(--primary-color);
   margin: -0.5rem 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.brand-cursive-print::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 25%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateX(-100%);
+  transition: transform 0.7s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand-cursive-print:hover::after {
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+.brand-cursive-print:hover {
+  transform: scale(1.02);
 }
 
 .business-tagline-print {
@@ -406,4 +480,111 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+/* Dark theme quote styles - Less Dark */
+[data-theme="dark"] .quote-document {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .quote-print-document {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .quote-header {
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .business-info .brand-main {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .business-tagline {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .quote-info h2 {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .quote-info p {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .quote-body h3,
+[data-theme="dark"] .quote-section-title {
+  color: var(--text-color);
+  border-color: var(--secondary-color);
+}
+
+[data-theme="dark"] .quote-table-print-container {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .quote-table-print {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .quote-table-print th {
+  background: var(--primary-color);
+  color: white;
+}
+
+[data-theme="dark"] .quote-table-print td {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .quote-table-print tbody tr:hover {
+  background: #404040;
+}
+
+[data-theme="dark"] .quote-totals-print {
+  background: var(--surface-bg);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .total-line-print,
+[data-theme="dark"] .final-total-print {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .final-total-print {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .quote-footer-print p {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .terms-print {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .quote-full-page {
+  background: var(--bg-color);
+}
+
+[data-theme="dark"] .quote-full-page-header {
+  background: var(--bg-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .quote-mobile-details-print {
+  color: var(--text-muted);
+}
+
+/* Dark theme quote shine effects */
+[data-theme="dark"] .business-info .brand-cursive::after,
+[data-theme="dark"] .brand-cursive-print::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 25%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 100%
+  );
 }

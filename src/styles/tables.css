@@ -169,3 +169,59 @@
     opacity: 0.2;
   }
 }
+
+/* Dark theme table styles - Less Dark */
+[data-theme="dark"] .table-container {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .table {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .table th {
+  background: var(--surface-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .table td {
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .table tr:hover {
+  background: var(--hover-bg);
+}
+
+[data-theme="dark"] .price-clickable {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .price-clickable:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .quantity-clickable {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .quantity-clickable:hover {
+  background: rgba(255, 201, 102, 0.15);
+  color: var(--secondary-color);
+}
+
+[data-theme="dark"] .inline-price-edit input,
+[data-theme="dark"] .inline-quantity-edit input {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .inline-price-edit input:focus,
+[data-theme="dark"] .inline-quantity-edit input:focus {
+  box-shadow: 0 0 0 2px rgba(255, 155, 184, 0.3);
+}

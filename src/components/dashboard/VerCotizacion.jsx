@@ -176,7 +176,7 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
             <div className="business-info-print">
               <h1 className="business-name-print">
                 <span className="brand-main-print">A Hornear</span>
-                <span className="brand-cursive-print">By Gaby</span>
+                <span className="brand-cursive-print" data-text="By Gaby">By Gaby</span>
               </h1>
               <p className="business-tagline-print">Repostería Artesanal</p>
             </div>
@@ -269,7 +269,7 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
           <div className="business-info">
             <h1 className="business-name">
               <span className="brand-main brand-main-font">A Hornear</span>
-              <span className="brand-cursive cursive-text">By Gaby</span>
+              <span className="brand-cursive cursive-text" data-text="By Gaby">By Gaby</span>
             </h1>
             <p className="business-tagline">Repostería Artesanal</p>
           </div>

@@ -99,6 +99,18 @@
   box-shadow: var(--shadow-md);
 }
 
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+  color: white;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--accent-hover);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-color));
+  box-shadow: var(--shadow-md);
+}
+
 /* Button sizes */
 .btn-sm {
   padding: 0.375rem 0.5rem;
@@ -152,4 +164,71 @@
   background: var(--danger-color);
   color: white;
   transform: scale(1.1);
+}
+
+/* Dark theme button styles */
+[data-theme="dark"] .btn-secondary {
+  background: var(--surface-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-secondary:hover:not(:disabled) {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .btn-success {
+  background: linear-gradient(135deg, var(--success-color), var(--success-hover));
+  color: white;
+  border-color: var(--success-color);
+}
+
+[data-theme="dark"] .btn-danger {
+  background: linear-gradient(135deg, var(--danger-color), var(--danger-hover));
+  color: white;
+  border-color: var(--danger-color);
+}
+
+[data-theme="dark"] .btn-accent {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+  color: white;
+  border-color: var(--accent-color);
+}
+
+[data-theme="dark"] .btn-accent:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-color));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .btn-inline-save {
+  color: var(--success-color);
+}
+
+[data-theme="dark"] .btn-inline-save:hover {
+  background: var(--success-color);
+  color: white;
+}
+
+[data-theme="dark"] .btn-inline-cancel {
+  color: var(--danger-color);
+}
+
+[data-theme="dark"] .btn-inline-cancel:hover {
+  background: var(--danger-color);
+  color: white;
 }

@@ -38,7 +38,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
         <div className="tab-section-buttons">
           <button
             onClick={() => setActiveTab('agregar-ingrediente')}
-            className={`btn tab-button ${activeTab === 'agregar-ingrediente' ? 'active' : 'btn-success'}`}
+            className={`btn tab-button ${activeTab === 'agregar-ingrediente' ? 'active' : 'btn-accent'}`}
             title="Agregar Ingrediente"
           >
             <i className="fas fa-plus"></i>
@@ -46,7 +46,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
           </button>
           <button
             onClick={() => setActiveTab('agregar-receta')}
-            className={`btn tab-button ${activeTab === 'agregar-receta' ? 'active' : 'btn-success'}`}
+            className={`btn tab-button ${activeTab === 'agregar-receta' ? 'active' : 'btn-accent'}`}
             title="Agregar Receta"
           >
             <i className="fas fa-plus"></i>
@@ -54,7 +54,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
           </button>
           <button
             onClick={() => setActiveTab('agregar-cotizacion')}
-            className={`btn tab-button ${activeTab === 'agregar-cotizacion' ? 'active' : 'btn-success'}`}
+            className={`btn tab-button ${activeTab === 'agregar-cotizacion' ? 'active' : 'btn-accent'}`}
             title="Agregar Cotización"
           >
             <i className="fas fa-plus"></i>

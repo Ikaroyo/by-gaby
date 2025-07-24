@@ -1,27 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
+import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { signIn } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setError('');
+      setLoading(true);
+      await signIn(email, password);
+    } catch {
+      setError('Failed to log in');
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
           <div className="brand-title">
             <div className="brand-main brand-main-font">A Hornear</div>
-            <div className="brand-cursive cursive-text">By Gaby</div>
+            <div className="brand-cursive cursive-text" data-text="By Gaby">By Gaby</div>
           </div>
+          <h2>
+            <i className="fas fa-sign-in-alt"></i>
+            Iniciar Sesión
+          </h2>
         </div>
-        <form className="form">
+
+        <div className="auth-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <button 
+            onClick={toggleTheme} 
+            className="btn btn-secondary btn-sm theme-toggle"
+            title={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+          >
+            <i className={isDark ? 'fas fa-sun' : 'fas fa-moon'}></i>
+            {isDark ? 'Claro' : 'Oscuro'}
+          </button>
+        </div>
+
+        <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required />
+            <input 
+              type="email" 
+              id="email" 
+              placeholder="Enter your email" 
+              required 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required />
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="Enter your password" 
+              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
+          {error && <div className="error-message">{error}</div>}
           <div className="form-actions">
-            <button type="submit" className="btn btn-primary">Login</button>
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
           </div>
         </form>
       </div>
