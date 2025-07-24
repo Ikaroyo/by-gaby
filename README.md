@@ -1,100 +1,203 @@
-# By Gaby - Calculadora de Costos de Recetas
+# 🧁 A Hornear By Gaby - Sistema de Gestión de Repostería
 
-Una aplicación React para el cálculo de costos de recetas y generación de cotizaciones, construida con Vite y Supabase.
+Un sistema completo para gestionar ingredientes, recetas y cotizaciones para un negocio de repostería artesanal.
 
-## Características
+## ✨ Características
 
-- **Autenticación de Usuario**: Registro e inicio de sesión con email/contraseña
-- **Gestión de Ingredientes**: Agregar ingredientes con seguimiento de marca, cantidad y precio
-- **Creación de Recetas**: Crear recetas con múltiples ingredientes y cálculo automático de costos
-- **Generación de Cotizaciones**: Crear cotizaciones con múltiples recetas para clientes
-- **Seguimiento de Costos**: Cálculo automático de costos totales y por porción
-- **Panel de Control**: Ver todas las recetas, ingredientes y cotizaciones en un solo lugar
-- **Interfaz Moderna**: Diseño limpio y responsivo con colores profesionales
+- 📝 **Gestión de Ingredientes**: Agregar, editar y controlar inventario con precios por unidad
+- 🍰 **Recetas**: Crear recetas con cálculo automático de costos basado en ingredientes
+- 💰 **Cotizaciones**: Generar presupuestos profesionales con márgenes de ganancia personalizables
+- 📱 **Responsive**: Diseño optimizado para móviles y desktop
+- 🖼️ **Exportar a Imagen**: Descargar cotizaciones como imágenes de alta calidad
+- 👤 **Autenticación**: Sistema seguro de usuarios con Supabase
+- 💡 **Edición Rápida**: Editar precios y cantidades directamente en las tablas
 
-## Instrucciones de Instalación
+## 🚀 Tecnologías Utilizadas
 
-### 1. Instalar Dependencias
+- **Frontend**: React 18 + Vite
+- **Backend**: Supabase
+- **Autenticación**: Supabase Auth
+- **Base de Datos**: PostgreSQL (Supabase)
+- **Estilos**: CSS personalizado con variables y tema de panadería
+- **Exportación**: html2canvas para generar imágenes
+- **Iconos**: Font Awesome
+
+## 📋 Requisitos Previos
+
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Cuenta de Supabase
+
+## 🛠️ Instalación
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/tu-usuario/by-gaby.git
+   cd by-gaby
+   ```
+
+2. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+3. **Configurar variables de entorno**
+   
+   Crear archivo `.env` en la raíz del proyecto:
+   ```env
+   VITE_SUPABASE_URL=tu_supabase_url
+   VITE_SUPABASE_ANON_KEY=tu_supabase_anon_key
+   ```
+
+4. **Configurar base de datos**
+   
+   Ejecutar el script SQL en tu consola de Supabase:
+   ```bash
+   # El archivo database-schema-fixed.sql contiene toda la estructura
+   ```
+
+5. **Ejecutar en desarrollo**
+   ```bash
+   npm run dev
+   ```
+
+## 🏗️ Estructura del Proyecto
+
+```
+src/
+├── components/
+│   ├── dashboard/          # Componentes del dashboard
+│   │   ├── AgregarCotizacion.jsx
+│   │   ├── AgregarIngrediente.jsx
+│   │   ├── AgregarReceta.jsx
+│   │   ├── EditarIngrediente.jsx
+│   │   ├── EditarReceta.jsx
+│   │   ├── IngredientsList.jsx
+│   │   ├── Navigation.jsx
+│   │   ├── QuotesList.jsx
+│   │   ├── RecipesList.jsx
+│   │   ├── StatsOverview.jsx
+│   │   ├── TabNavigation.jsx
+│   │   └── VerCotizacion.jsx
+│   ├── Dashboard.jsx       # Componente principal
+│   ├── Login.jsx          # Autenticación
+│   └── Register.jsx       # Registro
+├── contexts/
+│   └── AuthContext.jsx    # Contexto de autenticación
+├── lib/
+│   └── supabase.js       # Configuración de Supabase
+├── styles/               # Estilos CSS modulares
+│   ├── animations.css
+│   ├── auth.css
+│   ├── base.css
+│   ├── buttons.css
+│   ├── components.css
+│   ├── dashboard.css
+│   ├── forms.css
+│   ├── modal.css
+│   ├── quotes.css
+│   ├── responsive.css
+│   └── tables.css
+└── main.jsx             # Punto de entrada
+```
+
+## 📱 Características Móviles
+
+- **Controles Numéricos**: Botones + y - para incrementar/decrementar valores en móviles
+- **Tablas Adaptativas**: Las tablas se convierten en tarjetas en dispositivos móviles
+- **Navegación por Pestañas**: Optimizada para pantallas pequeñas con iconos
+- **Touch-Friendly**: Botones y controles diseñados para interacción táctil
+
+## 💼 Funcionalidades del Negocio
+
+### Gestión de Ingredientes
+- Agregar ingredientes con marca, cantidad, unidad y precio
+- Cálculo automático de precio por unidad
+- Edición rápida de precios y cantidades
+- Soporte para múltiples unidades de medida
+
+### Creación de Recetas
+- Seleccionar ingredientes de la base de datos
+- Especificar cantidades utilizadas
+- Cálculo automático del costo total de la receta
+- Definir porciones y tipo de tamaño
+
+### Sistema de Cotizaciones
+- Crear presupuestos profesionales
+- Seleccionar múltiples recetas con cantidades
+- Aplicar margen de ganancia personalizable
+- Opción de redondear precios hacia arriba
+- Exportar como imagen de alta calidad
+- Almacemiento de precios fijos (no se actualizan con cambios de ingredientes)
+
+## 🎨 Tema Visual
+
+El diseño utiliza una paleta de colores pasteles inspirada en repostería:
+- **Primario**: Rosa pastel (#f8a5c2)
+- **Secundario**: Dorado suave (#d4a574)
+- **Éxito**: Verde menta (#a3d977)
+- **Fuentes**: 
+  - Principal: Poppins
+  - Marca "A Hornear": Playfair Display
+  - Marca "By Gaby": Dancing Script (cursiva)
+
+## 🚀 Despliegue
+
+### Vercel (Recomendado)
+1. Conectar repositorio de GitHub a Vercel
+2. Configurar variables de entorno en Vercel
+3. Desplegar automáticamente
+
+### Netlify
+1. Conectar repositorio a Netlify
+2. Configurar variables de entorno
+3. Configurar comando de build: `npm run build`
+4. Directorio de publicación: `dist`
+
+## 🔧 Scripts Disponibles
 
 ```bash
-pnpm install
+npm run dev          # Servidor de desarrollo
+npm run build        # Construir para producción
+npm run preview      # Vista previa de la build
+npm run lint         # Verificar código con ESLint
 ```
 
-### 2. Configurar Supabase
+## 🔒 Seguridad
 
-1. Ve a [supabase.com](https://supabase.com) y crea un nuevo proyecto
-2. En el Editor SQL, ejecuta el contenido de `database-schema.sql` para crear las tablas
-3. Copia tu URL del proyecto y clave anónima desde Configuración > API
+### Variables de Entorno
+- ✅ `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` son **seguras** para exponerse públicamente
+- ❌ **NUNCA** uses `SUPABASE_SERVICE_ROLE_KEY` en el frontend
+- 🛡️ Row Level Security (RLS) protege todos los datos de usuario
 
-### 3. Configurar Variables de Entorno
+### Configuración de Seguridad
+Todas las tablas tienen:
+- **RLS habilitado**: Solo usuarios autenticados pueden acceder a sus datos
+- **Políticas restrictivas**: `auth.uid() = user_id` en todas las operaciones
+- **Autenticación JWT**: Tokens seguros manejados por Supabase
 
-1. Copia `.env.example` a `.env`:
-```bash
-cp .env.example .env
-```
+### ¿Por qué es seguro?
+La clave anónima (`anon key`) está diseñada específicamente para uso público:
+- Solo permite operaciones definidas en las políticas RLS
+- No puede bypasear restricciones de seguridad
+- No tiene privilegios administrativos
 
-2. Actualiza `.env` con tus credenciales de Supabase:
-```
-VITE_SUPABASE_URL=tu_url_del_proyecto_supabase_aqui
-VITE_SUPABASE_ANON_KEY=tu_clave_anonima_supabase_aqui
-```
+## 🤝 Contribución
 
-### 4. Ejecutar el Servidor de Desarrollo
+1. Fork el proyecto
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir un Pull Request
 
-```bash
-pnpm start
-# o
-pnpm run dev
-```
+## 📄 Licencia
 
-La aplicación estará disponible en `http://localhost:5173`
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
-## Esquema de Base de Datos
+## 👥 Autor
 
-La aplicación utiliza las siguientes tablas principales:
+**By Gaby** - Sistema de gestión para repostería artesanal
 
-- **profiles**: Perfiles de usuario (vinculados a la autenticación de Supabase)
-- **ingredients**: Inventario de ingredientes con precios
-- **recipes**: Definiciones de recetas con porciones
-- **recipe_ingredients**: Relación muchos-a-muchos entre recetas e ingredientes
-- **quotes**: Cotizaciones de clientes
-- **quote_recipes**: Relación muchos-a-muchos entre cotizaciones y recetas
+---
 
-## Uso
-
-1. **Registrarse/Iniciar Sesión**: Crea una cuenta o inicia sesión con credenciales existentes
-2. **Agregar Ingredientes**: Comienza agregando ingredientes con sus cantidades y precios
-3. **Crear Recetas**: Construye recetas seleccionando ingredientes y especificando las cantidades utilizadas
-4. **Generar Cotizaciones**: Crea cotizaciones para clientes seleccionando múltiples recetas con cantidades
-5. **Ver Panel de Control**: Monitorea todos tus datos desde el panel principal
-
-## Cálculos de Costos
-
-- **Costo de Ingrediente**: Calcula automáticamente el precio por unidad (precio/cantidad)
-- **Costo de Receta**: Suma todos los costos de ingredientes basados en las cantidades utilizadas
-- **Costo de Cotización**: Totaliza múltiples recetas con sus cantidades
-- **Por Porción**: Divide el costo total de la receta por el número de porciones
-
-## Funcionalidades de la Interfaz
-
-- **Diseño Responsivo**: Optimizado para dispositivos móviles y escritorio
-- **Tema Moderno**: Paleta de colores profesional con degradados
-- **Navegación por Pestañas**: Interfaz intuitiva para cambiar entre secciones
-- **Tarjetas de Estadísticas**: Resumen visual de tus datos
-- **Estados Vacíos**: Mensajes útiles cuando no hay datos
-- **Alertas y Confirmaciones**: Feedback claro para las acciones del usuario
-
-## Construir para Producción
-
-```bash
-pnpm run build
-```
-
-## Tecnologías Utilizadas
-
-- **Frontend**: React 18, Vite
-- **Backend**: Supabase (PostgreSQL + Autenticación)
-- **Estilos**: CSS Puro con Variables CSS
-- **Gestor de Paquetes**: pnpm
-- **Base de Datos**: PostgreSQL con triggers automáticos
-- **Autenticación**: Supabase Auth con Row Level Security (RLS)
+💕 **Hecho con amor para el mundo de la repostería artesanal** 🧁

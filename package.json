@@ -1,7 +1,8 @@
 {
-  "name": "by-gaby",
+  "name": "by-gaby-bakery-system",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Sistema de gestión para repostería artesanal - A Hornear By Gaby",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,21 +11,38 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "keywords": [
+    "bakery",
+    "recipe-management",
+    "cost-calculator",
+    "quotes",
+    "react",
+    "supabase"
+  ],
+  "author": "By Gaby",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/by-gaby.git"
+  },
+  "homepage": "https://github.com/tu-usuario/by-gaby#readme",
+  "bugs": {
+    "url": "https://github.com/tu-usuario/by-gaby/issues"
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/supabase-js": "^2.38.0",
     "html2canvas": "^1.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^4.1.1",
+    "@vitejs/plugin-react": "^4.1.0",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
-    "vite": "^5.0.0"
+    "vite": "^4.5.0"
   }
 }
