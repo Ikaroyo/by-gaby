@@ -183,7 +183,7 @@ const EditarReceta = ({ recipe, ingredients, onSuccess, onCancel, onAddIngredien
                 <option value="">Seleccionar ingrediente</option>
                 {ingredients.map(ingredient => (
                   <option key={ingredient.id} value={ingredient.id}>
-                    {ingredient.name} ({ingredient.brand}) - ${ingredient.price_per_unit.toFixed(4)}/{ingredient.unit}
+                    {ingredient.name} ({ingredient.brand}) - ${ingredient.price_per_unit.toFixed(2)}/{ingredient.unit}
                   </option>
                 ))}
               </select>

@@ -309,3 +309,13 @@ alter table public.recipes add column if not exists size_type text default 'porc
 
 -- Add profit_margin column to existing quotes table if it doesn't exist
 alter table public.quotes add column if not exists profit_margin numeric default 20;
+
+-- Add cost fields to quotes table
+ALTER TABLE public.quotes 
+ADD COLUMN IF NOT EXISTS base_cost numeric DEFAULT 0,
+ADD COLUMN IF NOT EXISTS total_cost numeric DEFAULT 0;
+
+-- Add cost fields to quote_recipes table
+ALTER TABLE public.quote_recipes 
+ADD COLUMN IF NOT EXISTS unit_cost numeric DEFAULT 0,
+ADD COLUMN IF NOT EXISTS total_cost numeric DEFAULT 0;

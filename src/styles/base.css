@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+:root {
+  font-family: 'Poppins', system-ui, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  
+  /* Bakery-themed pastel color palette */
+  --primary-color: #f8a5c2;
+  --primary-hover: #f487a8;
+  --primary-light: #fde2eb;
+  --secondary-color: #d4a574;
+  --secondary-hover: #c69657;
+  --success-color: #a3d977;
+  --success-hover: #8fcc5a;
+  --danger-color: #ff8a80;
+  --danger-hover: #ff6659;
+  --warning-color: #ffcc80;
+  --warning-hover: #ffb74d;
+  --accent-color: #b19cd9;
+  --accent-hover: #9b7bc9;
+  
+  /* Soft pastels */
+  --cream: #fef9f3;
+  --blush: #fdf2f8;
+  --lavender: #f5f3ff;
+  --mint: #f0fdf4;
+  --peach: #fff7ed;
+  
+  /* Neutral colors - softer and warmer */
+  --gray-50: #fefefe;
+  --gray-100: #fafafa;
+  --gray-200: #f5f5f5;
+  --gray-300: #e5e5e5;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  
+  /* Background and text */
+  --bg-color: var(--cream);
+  --text-color: var(--gray-800);
+  --text-muted: var(--gray-600);
+  
+  /* Soft shadows for bakery theme */
+  --shadow-sm: 0 2px 8px 0 rgba(248, 165, 194, 0.15);
+  --shadow: 0 4px 16px 0 rgba(248, 165, 194, 0.2), 0 2px 8px -2px rgba(212, 165, 116, 0.15);
+  --shadow-md: 0 8px 24px -4px rgba(248, 165, 194, 0.25), 0 4px 12px -4px rgba(212, 165, 116, 0.2);
+  --shadow-lg: 0 16px 32px -8px rgba(248, 165, 194, 0.3), 0 8px 16px -8px rgba(212, 165, 116, 0.25);
+  
+  /* Softer border radius */
+  --radius-sm: 0.5rem;
+  --radius: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  color-scheme: light;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Font classes */
+.cursive-text {
+  font-family: 'Dancing Script', cursive !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+}
+
+.brand-main-font {
+  font-family: 'Poppins', serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 30%, var(--lavender) 70%, var(--mint) 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(248, 165, 194, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(177, 156, 217, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Utility classes */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+}

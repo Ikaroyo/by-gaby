@@ -1,0 +1,409 @@
+/* Quote document styles */
+.quote-view {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quote-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quote-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.quote-document {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
+}
+
+.quote-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.business-info .business-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.business-info .brand-main {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-700);
+  font-family: 'Poppins', serif;
+  letter-spacing: 0.02em;
+}
+
+.business-info .brand-cursive {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: 'Dancing Script', cursive !important;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.business-tagline {
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.quote-info {
+  text-align: right;
+}
+
+.quote-info h2 {
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.quote-info p {
+  margin: 0.5rem 0;
+  color: var(--gray-700);
+}
+
+.quote-body h3 {
+  color: var(--gray-800);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.quote-table th,
+.quote-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.quote-table th {
+  background: var(--primary-light);
+  color: var(--gray-700);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.quote-table .text-center {
+  text-align: center;
+}
+
+.quote-table .text-right {
+  text-align: right;
+}
+
+.quote-table tr:hover {
+  background: var(--gray-50);
+}
+
+.quote-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.quote-totals {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--primary-color);
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.75rem 0;
+  font-size: 1rem;
+}
+
+.final-total {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--primary-color);
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.quote-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.quote-footer p {
+  margin: 0.5rem 0;
+  color: var(--gray-700);
+}
+
+.terms {
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+}
+
+.terms p {
+  margin: 0.25rem 0;
+}
+
+.mobile-hide {
+  display: table-cell;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.quote-mobile-details {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* Full page quote view */
+.quote-full-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.quote-full-page-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 2rem;
+  z-index: 10;
+}
+
+.quote-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quote-print-document {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 3rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  font-family: 'Poppins', Arial, sans-serif;
+  position: relative;
+}
+
+/* Ensure fonts load properly for image capture */
+.quote-print-document * {
+  font-family: 'Poppins', Arial, sans-serif !important;
+}
+
+.brand-main-print {
+  font-family: 'Playfair Display', serif !important;
+}
+
+.brand-cursive-print {
+  font-family: 'Dancing Script', cursive !important;
+}
+
+/* Ensure consistent rendering for image capture */
+.quote-print-document img,
+.quote-print-document svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.business-info-print {
+  flex: 1;
+  min-width: 250px;
+}
+
+.business-name-print {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.brand-main-print {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.02em;
+}
+
+.brand-cursive-print {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'Dancing Script', cursive;
+  color: var(--primary-color);
+  margin: -0.5rem 0;
+}
+
+.business-tagline-print {
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.quote-info-print {
+  flex: 1;
+  text-align: right;
+  min-width: 250px;
+}
+
+.quote-title-print {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.quote-details-print p {
+  margin: 0.75rem 0;
+  color: var(--gray-700);
+  font-size: 1.1rem;
+}
+
+.quote-body-print {
+  margin-top: 2rem;
+}
+
+.quote-section-title {
+  color: var(--gray-800);
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.75rem;
+}
+
+.quote-table-print-container {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.quote-table-print {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.quote-table-print th,
+.quote-table-print td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.quote-table-print th {
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.quote-table-print tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.quote-totals-print {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  border-left: 6px solid var(--primary-color);
+}
+
+.total-line-print {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.final-total-print {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 3px solid var(--primary-color);
+  font-size: 1.75rem;
+  color: var(--primary-color);
+}
+
+.quote-footer-print {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.quote-footer-print p {
+  margin: 1rem 0;
+  color: var(--gray-700);
+  font-size: 1.1rem;
+}
+
+.terms-print {
+  margin-top: 2rem;
+  color: var(--text-muted);
+}
+
+.terms-print p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.mobile-hide-print {
+  display: table-cell;
+}
+
+.mobile-only-print {
+  display: none;
+}
+
+.quote-mobile-details-print {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

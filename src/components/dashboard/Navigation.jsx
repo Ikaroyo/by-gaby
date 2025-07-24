@@ -1,4 +1,4 @@
-const Navigation = ({ user, onSignOut }) => {
+const Navigation = ({ user, onSignOut, isMobile }) => {
   return (
     <div className="nav fade-in">
       <div className="brand-title">
@@ -8,11 +8,11 @@ const Navigation = ({ user, onSignOut }) => {
       <div className="nav-links">
         <span>
           <i className="fas fa-user-circle"></i>
-          Bienvenida, {user?.email}
+          {isMobile ? user?.email?.split('@')[0] : `Bienvenida, ${user?.email}`}
         </span>
         <button onClick={onSignOut} className="btn btn-secondary btn-sm">
           <i className="fas fa-sign-out-alt"></i>
-          Cerrar Sesión
+          {isMobile ? 'Salir' : 'Cerrar Sesión'}
         </button>
       </div>
     </div>

@@ -1,0 +1,171 @@
+/* Table styles */
+.table-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+  vertical-align: middle;
+}
+
+.table th {
+  background: var(--gray-50);
+  font-weight: 600;
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.table tr:hover {
+  background: var(--gray-50);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Inline editing styles */
+.price-clickable {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.price-clickable:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.price-edit-icon {
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: var(--primary-color);
+}
+
+.price-clickable:hover .price-edit-icon {
+  opacity: 1;
+}
+
+.inline-price-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.inline-price-edit::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  border-radius: 6px;
+  z-index: -1;
+  opacity: 0.1;
+  animation: pulse 2s infinite;
+}
+
+.quantity-clickable {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.quantity-clickable:hover {
+  background: rgba(212, 165, 116, 0.1);
+  color: var(--secondary-color);
+}
+
+.quantity-edit-icon {
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: var(--secondary-color);
+}
+
+.quantity-clickable:hover .quantity-edit-icon {
+  opacity: 1;
+}
+
+.inline-quantity-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.inline-quantity-edit::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--secondary-color), var(--secondary-hover));
+  border-radius: 6px;
+  z-index: -1;
+  opacity: 0.1;
+  animation: pulse 2s infinite;
+}
+
+.inline-edit-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.table td .inline-price-edit input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(248, 165, 194, 0.3);
+}
+
+.price-updated {
+  animation: priceUpdate 1s ease-out;
+}
+
+@keyframes priceUpdate {
+  0% {
+    background: var(--success-color);
+    color: white;
+    transform: scale(1.05);
+  }
+  100% {
+    background: transparent;
+    color: inherit;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}

@@ -24,9 +24,17 @@ const Dashboard = () => {
   const [editingRecipe, setEditingRecipe] = useState(null)
   const [editingIngredient, setEditingIngredient] = useState(null)
   const [viewingQuote, setViewingQuote] = useState(null)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
   useEffect(() => {
     loadData()
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const loadData = async () => {
@@ -128,17 +136,19 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-      <Navigation user={user} onSignOut={handleSignOut} />
+      <Navigation user={user} onSignOut={handleSignOut} isMobile={isMobile} />
       
       <StatsOverview 
         recipes={recipes}
         ingredients={ingredients}
         quotes={quotes}
+        isMobile={isMobile}
       />
 
       <TabNavigation 
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        isMobile={isMobile}
       />
 
       {/* Tab Content */}
@@ -155,6 +165,7 @@ const Dashboard = () => {
               })
             }
           }}
+          isMobile={isMobile}
         />
       )}
 
@@ -173,6 +184,7 @@ const Dashboard = () => {
             }
           }}
           onDataChange={loadData}
+          isMobile={isMobile}
         />
       )}
 
@@ -189,6 +201,7 @@ const Dashboard = () => {
               })
             }
           }}
+          isMobile={isMobile}
         />
       )}
 

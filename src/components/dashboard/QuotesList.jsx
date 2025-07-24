@@ -1,4 +1,4 @@
-const QuotesList = ({ quotes, onView, onDelete }) => {
+const QuotesList = ({ quotes, onView, onDelete, isMobile }) => {
   return (
     <div className="card">
       <div className="card-header">
@@ -9,6 +9,51 @@ const QuotesList = ({ quotes, onView, onDelete }) => {
           <div className="empty-state">
             <h3>No hay cotizaciones aún</h3>
             <p>¡Crea tu primera cotización!</p>
+          </div>
+        ) : isMobile ? (
+          <div className="mobile-list">
+            {quotes.map(quote => (
+              <div key={quote.id} className="mobile-item">
+                <div className="mobile-item-header">
+                  <h4>{quote.name}</h4>
+                  <div className="mobile-actions">
+                    <button
+                      onClick={() => onView(quote)}
+                      className="btn btn-primary btn-sm"
+                      title="Ver Presupuesto"
+                    >
+                      <i className="fas fa-eye"></i>
+                    </button>
+                    <button
+                      onClick={() => onDelete(quote.id)}
+                      className="btn btn-danger btn-sm"
+                      title="Eliminar"
+                    >
+                      <i className="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="mobile-item-content">
+                  <div className="mobile-field">
+                    <span className="mobile-label">Cliente:</span>
+                    <span className="mobile-value">{quote.client_name || 'N/A'}</span>
+                  </div>
+                  
+                  <div className="mobile-field">
+                    <span className="mobile-label">Total:</span>
+                    <span className="mobile-value">
+                      <strong>${(quote.total_cost || 0).toFixed(2)}</strong>
+                    </span>
+                  </div>
+                  
+                  <div className="mobile-field">
+                    <span className="mobile-label">Fecha:</span>
+                    <span className="mobile-value">{new Date(quote.created_at).toLocaleDateString('es-ES')}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="table-container">

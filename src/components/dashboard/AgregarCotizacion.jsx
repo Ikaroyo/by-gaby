@@ -12,6 +12,7 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
   })
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [roundPrices, setRoundPrices] = useState(false)
 
   const addRecipe = () => {
     setQuoteRecipes([...quoteRecipes, { recipe_id: '', quantity: 1 }])
@@ -27,19 +28,21 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
     setQuoteRecipes(quoteRecipes.filter((_, i) => i !== index))
   }
 
-  const calculateBaseCost = () => {
-    return quoteRecipes.reduce((total, qr) => {
-      const recipe = recipes.find(rec => rec.id === qr.recipe_id)
-      if (recipe && qr.quantity) {
-        return total + (parseInt(qr.quantity) * (recipe.total_cost || 0))
-      }
-      return total
-    }, 0)
+  const calculateProductPrice = (recipe) => {
+    const baseCost = recipe.total_cost || 0
+    const price = baseCost * (1 + profitMargin / 100)
+    return roundPrices ? Math.ceil(price) : price
   }
 
   const calculateFinalCost = () => {
-    const baseCost = calculateBaseCost()
-    return baseCost * (1 + profitMargin / 100)
+    return quoteRecipes.reduce((total, qr) => {
+      const recipe = recipes.find(rec => rec.id === qr.recipe_id)
+      if (recipe && qr.quantity) {
+        const productPrice = calculateProductPrice(recipe)
+        return total + (parseInt(qr.quantity) * productPrice)
+      }
+      return total
+    }, 0)
   }
 
   const handleProfitMarginChange = (newMargin) => {
@@ -53,7 +56,6 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
     setMessage('')
 
     try {
-      const baseCost = calculateBaseCost()
       const finalCost = calculateFinalCost()
 
       const { data: quote, error: quoteError } = await supabase
@@ -62,7 +64,7 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
           name: formData.name,
           client_name: formData.client_name,
           profit_margin: profitMargin,
-          base_cost: baseCost,
+          base_cost: 0, // No longer needed as cost is incorporated into products
           total_cost: finalCost
         }])
         .select()
@@ -75,12 +77,13 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
           .filter(qr => qr.recipe_id && qr.quantity)
           .map(qr => {
             const recipe = recipes.find(rec => rec.id === qr.recipe_id)
+            const productPrice = calculateProductPrice(recipe)
             return {
               quote_id: quote.id,
               recipe_id: qr.recipe_id,
               quantity: parseInt(qr.quantity),
-              unit_cost: recipe?.total_cost || 0,
-              total_cost: (recipe?.total_cost || 0) * parseInt(qr.quantity)
+              unit_cost: productPrice,
+              total_cost: productPrice * parseInt(qr.quantity)
             }
           })
 
@@ -102,10 +105,17 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
     }
   }
 
+  const updateRecipeQuantity = (index, increment) => {
+    const updated = [...quoteRecipes]
+    const currentQuantity = parseInt(updated[index].quantity) || 1
+    const newQuantity = Math.max(1, currentQuantity + increment)
+    updated[index].quantity = newQuantity
+    setQuoteRecipes(updated)
+  }
+
   return (
     <div className="form-section">
       <h3>
-        <i className="fas fa-file-invoice-dollar"></i>
         Agregar Nueva Cotización
       </h3>
       {message && (
@@ -158,14 +168,33 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
                   </option>
                 ))}
               </select>
-              <input
-                type="number"
-                min="1"
-                placeholder="Cantidad"
-                value={qr.quantity}
-                onChange={(e) => updateRecipe(index, 'quantity', e.target.value)}
-                required
-              />
+              <div className="number-input-wrapper">
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Cantidad"
+                  value={qr.quantity}
+                  onChange={(e) => updateRecipe(index, 'quantity', e.target.value)}
+                  required
+                />
+                <div className="number-controls mobile-only">
+                  <button
+                    type="button"
+                    className="number-btn number-btn-up"
+                    onClick={() => updateRecipeQuantity(index, 1)}
+                  >
+                    <i className="fas fa-plus"></i>
+                  </button>
+                  <button
+                    type="button"
+                    className="number-btn number-btn-down"
+                    onClick={() => updateRecipeQuantity(index, -1)}
+                    disabled={parseInt(qr.quantity) <= 1}
+                  >
+                    <i className="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => removeRecipe(index)}
@@ -187,9 +216,9 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
 
         {quoteRecipes.length > 0 && (
           <div className="profit-section">
-            <h4>Margen de Ganancia</h4>
+            <h4>Configuración de Precios</h4>
             <div className="profit-controls">
-              <label>Porcentaje de ganancia:</label>
+              <label>Margen de ganancia:</label>
               <div className="profit-input">
                 <input
                   type="number"
@@ -201,22 +230,51 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
                 />
                 <span>%</span>
               </div>
-              <small>Este valor se guardará para futuras cotizaciones</small>
+              <small>Este margen se incluye en el precio de cada producto</small>
+            </div>
+            
+            <div className="rounding-controls">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={roundPrices}
+                  onChange={(e) => setRoundPrices(e.target.checked)}
+                />
+                <span className="checkmark"></span>
+                Redondear precios hacia arriba (números enteros)
+              </label>
+              <small>Los precios se redondearán al número entero superior más cercano</small>
             </div>
             
             <div className="profit-summary">
-              <p>
-                <span>Costo base:</span>
-                <strong>${calculateBaseCost().toFixed(2)}</strong>
-              </p>
-              <p>
-                <span>Ganancia ({profitMargin}%):</span>
-                <strong>${(calculateFinalCost() - calculateBaseCost()).toFixed(2)}</strong>
-              </p>
-              <p style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
-                <span>Total final:</span>
-                <strong style={{ color: '#059669', fontSize: '1.1em' }}>${calculateFinalCost().toFixed(2)}</strong>
-              </p>
+              <h5>Vista previa de precios:</h5>
+              {quoteRecipes.map((qr, index) => {
+                const recipe = recipes.find(rec => rec.id === qr.recipe_id)
+                if (!recipe || !qr.quantity) return null
+                
+                const basePrice = recipe.total_cost || 0
+                const finalPrice = calculateProductPrice(recipe)
+                
+                return (
+                  <div key={index} className="price-preview">
+                    <span>{recipe.name} × {qr.quantity}:</span>
+                    <span>
+                      <small>${basePrice.toFixed(2)} → </small>
+                      <strong>${finalPrice.toFixed(2)} c/u = {(finalPrice * qr.quantity).toFixed(2)}</strong>
+                      {roundPrices && finalPrice !== basePrice * (1 + profitMargin / 100) && (
+                        <small className="rounded-indicator"> (redondeado)</small>
+                      )}
+                    </span>
+                  </div>
+                )
+              })}
+              
+              <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
+                <p>
+                  <span>Total cotización:</span>
+                  <strong style={{ color: '#059669', fontSize: '1.1em' }}>${calculateFinalCost().toFixed(2)}</strong>
+                </p>
+              </div>
             </div>
           </div>
         )}

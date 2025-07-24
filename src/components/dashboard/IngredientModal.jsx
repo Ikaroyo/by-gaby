@@ -18,13 +18,16 @@ const IngredientModal = ({ onSuccess, onCancel }) => {
     setMessage('')
 
     try {
+      const quantity = Math.round(parseFloat(formData.quantity) * 100) / 100
+      const price = Math.round(parseFloat(formData.price) * 100) / 100
+      
       const { data, error } = await supabase.from('ingredients').insert([
         {
           name: formData.name,
           brand: formData.brand,
-          quantity: parseFloat(formData.quantity),
+          quantity: quantity,
           unit: formData.unit,
-          price: parseFloat(formData.price)
+          price: price
         }
       ]).select().single()
 

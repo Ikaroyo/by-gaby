@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
+import html2canvas from 'html2canvas'
 
 const VerCotizacion = ({ quote, onCancel }) => {
   const [quoteDetails, setQuoteDetails] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [fullPageView, setFullPageView] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+  const quoteRef = useRef(null)
 
   useEffect(() => {
     loadQuoteDetails()
@@ -50,9 +54,8 @@ const VerCotizacion = ({ quote, onCancel }) => {
     }
   }
 
-  const calculateSubtotal = () => {
-    if (!quoteDetails) return 0
-    return quoteDetails.base_cost || 0
+  const toggleFullPageView = () => {
+    setFullPageView(!fullPageView)
   }
 
   const calculateTotal = () => {
@@ -104,6 +107,34 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
     `.trim()
   }
 
+  const downloadAsImage = async () => {
+    if (!quoteRef.current) return
+    
+    setDownloading(true)
+    try {
+      const canvas = await html2canvas(quoteRef.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        width: quoteRef.current.scrollWidth,
+        height: quoteRef.current.scrollHeight,
+        scrollX: 0,
+        scrollY: 0
+      })
+      
+      const link = document.createElement('a')
+      link.download = `presupuesto-${quoteDetails.name.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } catch (error) {
+      console.error('Error downloading image:', error)
+      alert('Error al descargar la imagen')
+    } finally {
+      setDownloading(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="form-section">
@@ -120,20 +151,111 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
     )
   }
 
+  if (fullPageView) {
+    return (
+      <div className="quote-full-page">
+        <div className="quote-full-page-header">
+          <div className="quote-header-actions">
+            <button onClick={toggleFullPageView} className="btn btn-secondary btn-sm quote-back-btn">
+              <i className="fas fa-arrow-left"></i>
+              Volver
+            </button>
+            <button 
+              onClick={downloadAsImage} 
+              className="btn btn-success btn-sm"
+              disabled={downloading}
+            >
+              <i className={downloading ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+              {downloading ? 'Descargando...' : 'Descargar Imagen'}
+            </button>
+          </div>
+        </div>
+        
+        <div className="quote-print-document" ref={quoteRef}>
+          <div className="quote-print-header">
+            <div className="business-info-print">
+              <h1 className="business-name-print">
+                <span className="brand-main-print">A Hornear</span>
+                <span className="brand-cursive-print">By Gaby</span>
+              </h1>
+              <p className="business-tagline-print">Repostería Artesanal</p>
+            </div>
+            <div className="quote-info-print">
+              <h2 className="quote-title-print">PRESUPUESTO</h2>
+              <div className="quote-details-print">
+                <p><strong>Cotización:</strong> {quoteDetails.name}</p>
+                <p><strong>Cliente:</strong> {quoteDetails.client_name || 'N/A'}</p>
+                <p><strong>Fecha:</strong> {new Date().toLocaleDateString('es-ES')}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="quote-body-print">
+            <h3 className="quote-section-title">Detalle del Pedido</h3>
+            <div className="quote-table-print-container">
+              <table className="quote-table-print">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th className="mobile-hide-print">Tamaño</th>
+                    <th>Cant.</th>
+                    <th className="mobile-hide-print">Precio Unit.</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {quoteDetails.quote_recipes.map((qr, index) => (
+                    <tr key={index}>
+                      <td>
+                        <strong>{qr.recipes.name}</strong>
+                        <div className="mobile-only-print quote-mobile-details-print">
+                          <small>{qr.recipes.servings} {qr.recipes.size_type}</small>
+                          <br />
+                          <small>${qr.recipe_cost.toFixed(2)} c/u</small>
+                        </div>
+                      </td>
+                      <td className="mobile-hide-print">{qr.recipes.servings} {qr.recipes.size_type}</td>
+                      <td className="text-center">{qr.quantity}</td>
+                      <td className="mobile-hide-print text-right">${qr.recipe_cost.toFixed(2)}</td>
+                      <td className="text-right"><strong>${qr.total_cost.toFixed(2)}</strong></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="quote-totals-print">
+              <div className="total-line-print final-total-print">
+                <span><strong>TOTAL:</strong></span>
+                <span><strong>${calculateTotal().toFixed(2)}</strong></span>
+              </div>
+            </div>
+
+            <div className="quote-footer-print">
+              <p><strong>¡Gracias por confiar en nosotros!</strong> 💕</p>
+              <p>Para confirmar tu pedido, ponte en contacto con nosotros.</p>
+              <div className="terms-print">
+                <p><small>• Los precios están sujetos a cambios sin previo aviso</small></p>
+                <p><small>• Se requiere anticipo del 50% para confirmar el pedido</small></p>
+                <p><small>• Tiempo de entrega: consultar disponibilidad</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="form-section quote-view">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div className="quote-header-actions">
         <h3>
           Presupuesto para Cliente
         </h3>
-        <div style={{ display: 'flex', gap: '0.25rem' }}>
-          <button onClick={copyQuoteText} className="btn btn-success btn-sm">
-            <i className="fas fa-copy"></i>
-            Copiar
-          </button>
-          <button onClick={printQuote} className="btn btn-secondary btn-sm">
-            <i className="fas fa-print"></i>
-            Imprimir
+        <div className="quote-actions">
+          <button onClick={toggleFullPageView} className="btn btn-primary btn-sm">
+            <i className="fas fa-expand"></i>
+            Ver Presupuesto
           </button>
           <button onClick={onCancel} className="btn btn-secondary btn-sm">
             <i className="fas fa-times"></i>
@@ -161,38 +283,39 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
 
         <div className="quote-body">
           <h3>Detalle del Pedido</h3>
-          <table className="quote-table">
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Tamaño</th>
-                <th>Cantidad</th>
-                <th>Precio Unit.</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {quoteDetails.quote_recipes.map((qr, index) => (
-                <tr key={index}>
-                  <td><strong>{qr.recipes.name}</strong></td>
-                  <td>{qr.recipes.servings} {qr.recipes.size_type}</td>
-                  <td className="text-center">{qr.quantity}</td>
-                  <td className="text-right">${qr.recipe_cost.toFixed(2)}</td>
-                  <td className="text-right"><strong>${qr.total_cost.toFixed(2)}</strong></td>
+          <div className="quote-table-container">
+            <table className="quote-table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th className="mobile-hide">Tamaño</th>
+                  <th>Cant.</th>
+                  <th className="mobile-hide">Precio Unit.</th>
+                  <th>Total</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {quoteDetails.quote_recipes.map((qr, index) => (
+                  <tr key={index}>
+                    <td>
+                      <strong>{qr.recipes.name}</strong>
+                      <div className="mobile-only quote-mobile-details">
+                        <small>{qr.recipes.servings} {qr.recipes.size_type}</small>
+                        <br />
+                        <small>${qr.recipe_cost.toFixed(2)} c/u</small>
+                      </div>
+                    </td>
+                    <td className="mobile-hide">{qr.recipes.servings} {qr.recipes.size_type}</td>
+                    <td className="text-center">{qr.quantity}</td>
+                    <td className="mobile-hide text-right">${qr.recipe_cost.toFixed(2)}</td>
+                    <td className="text-right"><strong>${qr.total_cost.toFixed(2)}</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="quote-totals">
-            <div className="total-line">
-              <span>Subtotal:</span>
-              <span>${calculateSubtotal().toFixed(2)}</span>
-            </div>
-            <div className="total-line">
-              <span>Mano de Obra y Servicios:</span>
-              <span>${(calculateTotal() - calculateSubtotal()).toFixed(2)}</span>
-            </div>
             <div className="total-line final-total">
               <span><strong>TOTAL:</strong></span>
               <span><strong>${calculateTotal().toFixed(2)}</strong></span>

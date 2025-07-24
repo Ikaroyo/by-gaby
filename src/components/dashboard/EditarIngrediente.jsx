@@ -18,14 +18,17 @@ const EditarIngrediente = ({ ingredient, onSuccess, onCancel }) => {
     setMessage('')
 
     try {
+      const quantity = Math.round(parseFloat(formData.quantity) * 100) / 100
+      const price = Math.round(parseFloat(formData.price) * 100) / 100
+      
       const { error } = await supabase
         .from('ingredients')
         .update({
           name: formData.name,
           brand: formData.brand,
-          quantity: parseFloat(formData.quantity),
+          quantity: quantity,
           unit: formData.unit,
-          price: parseFloat(formData.price)
+          price: price
         })
         .eq('id', ingredient.id)
 
@@ -76,14 +79,34 @@ const EditarIngrediente = ({ ingredient, onSuccess, onCancel }) => {
         </div>
         <div className="form-group">
           <label>Cantidad</label>
-          <input
-            type="number"
-            step="0.01"
-            value={formData.quantity}
-            onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-            required
-            placeholder="ej. 1000"
-          />
+          <div className="number-input-wrapper">
+            <input
+              type="number"
+              step="0.01"
+              value={formData.quantity}
+              onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+              required
+              placeholder="ej. 1000"
+            />
+            <div className="number-controls mobile-only">
+              <button
+                type="button"
+                className="number-btn number-btn-up"
+                onClick={() => setFormData({ ...formData, quantity: (parseFloat(formData.quantity) + 1).toString() })}
+                disabled={!formData.quantity}
+              >
+                <i className="fas fa-plus"></i>
+              </button>
+              <button
+                type="button"
+                className="number-btn number-btn-down"
+                onClick={() => setFormData({ ...formData, quantity: Math.max(0, parseFloat(formData.quantity) - 1).toString() })}
+                disabled={!formData.quantity || parseFloat(formData.quantity) <= 0}
+              >
+                <i className="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div className="form-group">
           <label>Unidad</label>
@@ -105,14 +128,34 @@ const EditarIngrediente = ({ ingredient, onSuccess, onCancel }) => {
         </div>
         <div className="form-group">
           <label>Precio ($)</label>
-          <input
-            type="number"
-            step="0.01"
-            value={formData.price}
-            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-            required
-            placeholder="ej. 4.99"
-          />
+          <div className="number-input-wrapper">
+            <input
+              type="number"
+              step="0.01"
+              value={formData.price}
+              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              required
+              placeholder="ej. 4.99"
+            />
+            <div className="number-controls mobile-only">
+              <button
+                type="button"
+                className="number-btn number-btn-up"
+                onClick={() => setFormData({ ...formData, price: (parseFloat(formData.price) + 1).toString() })}
+                disabled={!formData.price}
+              >
+                <i className="fas fa-plus"></i>
+              </button>
+              <button
+                type="button"
+                className="number-btn number-btn-down"
+                onClick={() => setFormData({ ...formData, price: Math.max(0, parseFloat(formData.price) - 1).toString() })}
+                disabled={!formData.price || parseFloat(formData.price) <= 0}
+              >
+                <i className="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div className="form-actions">
           <button type="submit" className="btn btn-primary" disabled={loading}>
