@@ -6,6 +6,39 @@ const IngredientsList = ({ ingredients, setIngredients, onEdit, onDelete, onData
   const [editingQuantity, setEditingQuantity] = useState(null)
   const [tempPrice, setTempPrice] = useState('')
   const [tempQuantity, setTempQuantity] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+
+  // Fuzzy search algorithm
+  const fuzzyMatch = (text, query) => {
+    if (!query) return true
+    
+    const textLower = text.toLowerCase()
+    const queryLower = query.toLowerCase()
+    
+    // Exact match
+    if (textLower.includes(queryLower)) return true
+    
+    // Character similarity
+    let score = 0
+    let queryIndex = 0
+    
+    for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
+      if (textLower[i] === queryLower[queryIndex]) {
+        score++
+        queryIndex++
+      }
+    }
+    
+    // Return true if at least 70% of query characters are found in order
+    return score / queryLower.length >= 0.7
+  }
+
+  const filteredIngredients = ingredients.filter(ingredient => {
+    if (!searchTerm) return true
+    
+    return fuzzyMatch(ingredient.name, searchTerm) || 
+           fuzzyMatch(ingredient.brand, searchTerm)
+  })
 
   const startPriceEdit = (ingredient) => {
     setEditingPrice(ingredient.id)
@@ -87,19 +120,70 @@ const IngredientsList = ({ ingredients, setIngredients, onEdit, onDelete, onData
     <div className="card">
       <div className="card-header">
         <h2>Mis Ingredientes</h2>
+        <div style={{ marginTop: '1rem', position: 'relative', maxWidth: '300px' }}>
+          <input
+            type="text"
+            placeholder="Buscar por nombre o marca..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ 
+              width: '100%',
+              padding: '1rem 1rem 1rem 3rem',
+              border: '2px solid var(--gray-200)',
+              borderRadius: 'var(--radius)',
+              fontSize: '1rem',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              background: 'rgba(255, 255, 255, 0.9)',
+              backdropFilter: 'blur(10px)',
+              position: 'relative',
+              paddingRight: searchTerm ? '2.5rem' : '1rem'
+            }}
+          />
+          <i 
+            className="fas fa-search" 
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: 'var(--text-muted)',
+              fontSize: '1rem'
+            }}
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              style={{
+                position: 'absolute',
+                right: '0.5rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                padding: '0.25rem',
+                fontSize: '0.875rem'
+              }}
+              title="Limpiar búsqueda"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
         <small style={{ color: 'var(--text-muted)', marginTop: '0.5rem', display: 'block' }}>
           💡 Haz clic en el precio o cantidad para editarlos rápidamente. Los costos de las recetas se actualizarán automáticamente.
         </small>
       </div>
       <div className="card-body">
-        {ingredients.length === 0 ? (
+        {filteredIngredients.length === 0 ? (
           <div className="empty-state">
-            <h3>No hay ingredientes aún</h3>
-            <p>¡Agrega tu primer ingrediente para empezar!</p>
+            <h3>{searchTerm ? 'No se encontraron ingredientes' : 'No hay ingredientes aún'}</h3>
+            <p>{searchTerm ? 'Intenta con otros términos de búsqueda' : '¡Agrega tu primer ingrediente para empezar!'}</p>
           </div>
         ) : isMobile ? (
           <div className="mobile-list">
-            {ingredients.map(ingredient => (
+            {filteredIngredients.map(ingredient => (
               <div key={ingredient.id} className="mobile-item">
                 <div className="mobile-item-header">
                   <h4>{ingredient.name}</h4>
@@ -252,7 +336,7 @@ const IngredientsList = ({ ingredients, setIngredients, onEdit, onDelete, onData
                 </tr>
               </thead>
               <tbody>
-                {ingredients.map(ingredient => (
+                {filteredIngredients.map(ingredient => (
                   <tr key={ingredient.id}>
                     <td><strong>{ingredient.name}</strong></td>
                     <td>{ingredient.brand}</td>
