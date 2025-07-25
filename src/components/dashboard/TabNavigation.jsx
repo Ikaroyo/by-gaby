@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
   return (
     <div className="tab-nav slide-up">
@@ -38,7 +39,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
         <div className="tab-section-buttons">
           <button
             onClick={() => setActiveTab('agregar-ingrediente')}
-            className={`btn tab-button ${activeTab === 'agregar-ingrediente' ? 'active' : 'btn-accent'}`}
+            className={`btn tab-button ${activeTab === 'agregar-ingrediente' ? 'active' : 'btn-secondary'}`}
             title="Agregar Ingrediente"
           >
             <i className="fas fa-plus"></i>
@@ -46,7 +47,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
           </button>
           <button
             onClick={() => setActiveTab('agregar-receta')}
-            className={`btn tab-button ${activeTab === 'agregar-receta' ? 'active' : 'btn-accent'}`}
+            className={`btn tab-button ${activeTab === 'agregar-receta' ? 'active' : 'btn-secondary'}`}
             title="Agregar Receta"
           >
             <i className="fas fa-plus"></i>
@@ -54,7 +55,7 @@ const TabNavigation = ({ activeTab, setActiveTab, isMobile }) => {
           </button>
           <button
             onClick={() => setActiveTab('agregar-cotizacion')}
-            className={`btn tab-button ${activeTab === 'agregar-cotizacion' ? 'active' : 'btn-accent'}`}
+            className={`btn tab-button ${activeTab === 'agregar-cotizacion' ? 'active' : 'btn-secondary'}`}
             title="Agregar Cotización"
           >
             <i className="fas fa-plus"></i>

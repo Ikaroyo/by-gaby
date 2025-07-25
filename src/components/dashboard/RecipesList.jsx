@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 import { useState } from 'react'
 
 const RecipesList = ({ recipes, onEdit, onDelete, isMobile }) => {

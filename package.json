@@ -30,12 +30,13 @@
     "url": "https://github.com/tu-usuario/by-gaby/issues"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@supabase/supabase-js": "^2.38.0",
-    "html2canvas": "^1.4.1"
+    "html2canvas": "^1.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.2",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.1.0",

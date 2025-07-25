@@ -1,6 +1,8 @@
+/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
+/** biome-ignore-all lint/correctness/noUnusedFunctionParameters: <explanation> */
 import { useState } from 'react'
 
-const QuotesList = ({ quotes, onView, onDelete, isMobile }) => {
+const QuotesList = ({ quotes, onView, onDelete, isMobile, recipes = [] }) => {
   const [searchTerm, setSearchTerm] = useState('')
 
   // Fuzzy search algorithm
@@ -34,6 +36,24 @@ const QuotesList = ({ quotes, onView, onDelete, isMobile }) => {
     return fuzzyMatch(quote.name, searchTerm) || 
            (quote.client_name && fuzzyMatch(quote.client_name, searchTerm))
   })
+
+  // Calculate profit for a quote using database fields
+  const calculateQuoteProfit = (quote) => {
+    const totalCost = quote.total_cost || 0
+    const profitMargin = quote.profit_margin || 0
+    
+    // Since total_cost includes profit, we need to calculate base cost first
+    // If total_cost = base_cost * (1 + profit_margin/100)
+    // Then base_cost = total_cost / (1 + profit_margin/100)
+    // And profit = total_cost - base_cost
+    
+    if (profitMargin > 0) {
+      const baseCost = totalCost / (1 + profitMargin / 100)
+      return totalCost - baseCost
+    }
+    
+    return 0
+  }
 
   return (
     <div className="card">
@@ -99,48 +119,60 @@ const QuotesList = ({ quotes, onView, onDelete, isMobile }) => {
           </div>
         ) : isMobile ? (
           <div className="mobile-list">
-            {filteredQuotes.map(quote => (
-              <div key={quote.id} className="mobile-item">
-                <div className="mobile-item-header">
-                  <h4>{quote.name}</h4>
-                  <div className="mobile-actions">
-                    <button
-                      onClick={() => onView(quote)}
-                      className="btn btn-primary btn-sm"
-                      title="Ver Presupuesto"
-                    >
-                      <i className="fas fa-eye"></i>
-                    </button>
-                    <button
-                      onClick={() => onDelete(quote.id)}
-                      className="btn btn-danger btn-sm"
-                      title="Eliminar"
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="mobile-item-content">
-                  <div className="mobile-field">
-                    <span className="mobile-label">Cliente:</span>
-                    <span className="mobile-value">{quote.client_name || 'N/A'}</span>
+            {filteredQuotes.map(quote => {
+              const profit = calculateQuoteProfit(quote)
+              return (
+                <div key={quote.id} className="mobile-item">
+                  <div className="mobile-item-header">
+                    <h4>{quote.name}</h4>
+                    <div className="mobile-actions">
+                      <button
+                        onClick={() => onView(quote)}
+                        className="btn btn-primary btn-sm"
+                        title="Ver Presupuesto"
+                      >
+                        <i className="fas fa-eye"></i>
+                      </button>
+                      <button
+                        onClick={() => onDelete(quote.id)}
+                        className="btn btn-danger btn-sm"
+                        title="Eliminar"
+                      >
+                        <i className="fas fa-trash"></i>
+                      </button>
+                    </div>
                   </div>
                   
-                  <div className="mobile-field">
-                    <span className="mobile-label">Total:</span>
-                    <span className="mobile-value">
-                      <strong>${(quote.total_cost || 0).toFixed(2)}</strong>
-                    </span>
-                  </div>
-                  
-                  <div className="mobile-field">
-                    <span className="mobile-label">Fecha:</span>
-                    <span className="mobile-value">{new Date(quote.created_at).toLocaleDateString('es-ES')}</span>
+                  <div className="mobile-item-content">
+                    <div className="mobile-field">
+                      <span className="mobile-label">Cliente:</span>
+                      <span className="mobile-value">{quote.client_name || 'N/A'}</span>
+                    </div>
+                    
+                    <div className="mobile-field">
+                      <span className="mobile-label">Total:</span>
+                      <span className="mobile-value">
+                        <strong>${(quote.total_cost || 0).toFixed(2)}</strong>
+                      </span>
+                    </div>
+                    
+                    <div className="mobile-field">
+                      <span className="mobile-label">Ganancia:</span>
+                      <span className="mobile-value">
+                        <strong style={{ color: profit >= 0 ? 'var(--success-color)' : 'var(--danger-color)' }}>
+                          ${profit.toFixed(2)}
+                        </strong>
+                      </span>
+                    </div>
+                    
+                    <div className="mobile-field">
+                      <span className="mobile-label">Fecha:</span>
+                      <span className="mobile-value">{new Date(quote.created_at).toLocaleDateString('es-ES')}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         ) : (
           <div className="table-container">
@@ -150,34 +182,43 @@ const QuotesList = ({ quotes, onView, onDelete, isMobile }) => {
                   <th>Nombre</th>
                   <th>Cliente</th>
                   <th>Total Fijo</th>
+                  <th>Ganancia</th>
                   <th>Fecha Creación</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredQuotes.map(quote => (
-                  <tr key={quote.id}>
-                    <td><strong>{quote.name}</strong></td>
-                    <td>{quote.client_name || 'N/A'}</td>
-                    <td><strong>${(quote.total_cost || 0).toFixed(2)}</strong></td>
-                    <td>{new Date(quote.created_at).toLocaleDateString('es-ES')}</td>
-                    <td>
-                      <button
-                        onClick={() => onView(quote)}
-                        className="btn btn-primary btn-sm"
-                        style={{ marginRight: '0.5rem' }}
-                      >
-                        Ver Presupuesto
-                      </button>
-                      <button
-                        onClick={() => onDelete(quote.id)}
-                        className="btn btn-danger btn-sm"
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {filteredQuotes.map(quote => {
+                  const profit = calculateQuoteProfit(quote)
+                  return (
+                    <tr key={quote.id}>
+                      <td><strong>{quote.name}</strong></td>
+                      <td>{quote.client_name || 'N/A'}</td>
+                      <td><strong>${(quote.total_cost || 0).toFixed(2)}</strong></td>
+                      <td>
+                        <strong style={{ color: profit >= 0 ? 'var(--success-color)' : 'var(--danger-color)' }}>
+                          ${profit.toFixed(2)}
+                        </strong>
+                      </td>
+                      <td>{new Date(quote.created_at).toLocaleDateString('es-ES')}</td>
+                      <td>
+                        <button
+                          onClick={() => onView(quote)}
+                          className="btn btn-primary btn-sm"
+                          style={{ marginRight: '0.5rem' }}
+                        >
+                          Ver Presupuesto
+                        </button>
+                        <button
+                          onClick={() => onDelete(quote.id)}
+                          className="btn btn-danger btn-sm"
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

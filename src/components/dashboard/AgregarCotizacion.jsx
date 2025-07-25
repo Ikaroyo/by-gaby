@@ -34,6 +34,17 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
     return roundPrices ? Math.ceil(price) : price
   }
 
+  const calculateBaseCost = () => {
+    return quoteRecipes.reduce((total, qr) => {
+      const recipe = recipes.find(rec => rec.id === qr.recipe_id)
+      if (recipe && qr.quantity) {
+        const baseCost = recipe.total_cost || 0
+        return total + (parseInt(qr.quantity) * baseCost)
+      }
+      return total
+    }, 0)
+  }
+
   const calculateFinalCost = () => {
     return quoteRecipes.reduce((total, qr) => {
       const recipe = recipes.find(rec => rec.id === qr.recipe_id)
@@ -56,6 +67,7 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
     setMessage('')
 
     try {
+      const baseCost = calculateBaseCost()
       const finalCost = calculateFinalCost()
 
       const { data: quote, error: quoteError } = await supabase
@@ -64,7 +76,7 @@ const AgregarCotizacion = ({ recipes, onSuccess }) => {
           name: formData.name,
           client_name: formData.client_name,
           profit_margin: profitMargin,
-          base_cost: 0, // No longer needed as cost is incorporated into products
+          base_cost: baseCost,
           total_cost: finalCost
         }])
         .select()
