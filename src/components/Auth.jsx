@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { useTheme } from '../contexts/ThemeContext'
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
-  const { signIn, signUp } = useAuth()
+  const { signIn } = useAuth()
+  const { isDark, toggleTheme } = useTheme()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -17,17 +17,10 @@ const Auth = () => {
     setMessage('')
 
     try {
-      let result
-      if (isLogin) {
-        result = await signIn(email, password)
-      } else {
-        result = await signUp(email, password, fullName)
-      }
-
+      const result = await signIn(email, password)
+      
       if (result.error) {
         setMessage(result.error.message)
-      } else if (!isLogin) {
-        setMessage('¡Revisa tu correo electrónico para confirmar tu cuenta!')
       }
     } catch (error) {
       setMessage('Ocurrió un error inesperado')
@@ -38,46 +31,48 @@ const Auth = () => {
 
   return (
     <div className="auth-container fade-in">
-      <div className="auth-card slide-up">
+      <div className="auth-card slide-up" style={{ position: 'relative' }}>
+        <button 
+          onClick={toggleTheme} 
+          className="btn btn-secondary btn-sm theme-toggle"
+          title={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+          style={{ 
+            position: 'absolute',
+            top: '1rem',
+            right: '1rem',
+            minWidth: 'auto',
+            padding: '0.75rem',
+            fontSize: '1rem',
+            borderRadius: '8px',
+            zIndex: 10,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          <i className={isDark ? 'fas fa-sun' : 'fas fa-moon'}></i>
+        </button>
+        
         <div className="auth-header">
           <div className="brand-title">
             <div className="brand-main">A Hornear</div>
             <div className="brand-cursive cursive-text">By Gaby</div>
           </div>
           <h2>
-            <i className={`fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'}`}></i>
-            {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+            <i className="fas fa-sign-in-alt"></i>
+            Iniciar Sesión
           </h2>
+        </div>
+
+        <div className="auth-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         </div>
         
         {message && (
-          <div className={`alert ${message.includes('error') || message.includes('Error') ? 'alert-error' : 'alert-success'}`}>
-            <i className={`fas ${message.includes('error') || message.includes('Error') ? 'fa-exclamation-triangle' : 'fa-check-circle'}`}></i>
+          <div className="alert alert-error">
+            <i className="fas fa-exclamation-triangle"></i>
             {message}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="form">
-          {!isLogin && (
-            <div className="form-group">
-              <label htmlFor="fullName">
-                <i className="fas fa-user"></i>
-                Nombre Completo
-              </label>
-              <div style={{ position: 'relative' }}>
-                <i className="fas fa-user input-icon"></i>
-                <input
-                  type="text"
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required={!isLogin}
-                  placeholder="Ingresa tu nombre completo"
-                />
-              </div>
-            </div>
-          )}
-
           <div className="form-group">
             <label htmlFor="email">
               <i className="fas fa-envelope"></i>
@@ -109,7 +104,7 @@ const Auth = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Ingresa tu contraseña"
                 minLength={6}
               />
             </div>
@@ -128,29 +123,12 @@ const Auth = () => {
               </>
             ) : (
               <>
-                <i className={`fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'}`}></i>
-                {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+                <i className="fas fa-sign-in-alt"></i>
+                Iniciar Sesión
               </>
             )}
           </button>
         </form>
-
-        <div style={{ textAlign: 'center', marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid rgba(248, 165, 194, 0.2)' }}>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-            {isLogin ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'}
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setIsLogin(!isLogin)
-              setMessage('')
-            }}
-            className="btn btn-secondary"
-          >
-            <i className={`fas ${isLogin ? 'fa-user-plus' : 'fa-sign-in-alt'}`}></i>
-            {isLogin ? 'Crear Cuenta' : 'Iniciar Sesión'}
-          </button>
-        </div>
       </div>
     </div>
   )

@@ -140,7 +140,8 @@
 
 /* Main brand font class for "A Hornear" */
 .brand-main-font {
-  font-family: 'Poppins', serif !important;
+  /* font-family: 'Poppins', serif !important; */
+  font-family: 'Playfair Display', serif !important;
   font-weight: 700 !important;
   letter-spacing: 0.02em !important;
 }

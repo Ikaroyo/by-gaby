@@ -234,6 +234,7 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
             <div className="quote-footer-print">
               <p><strong>¡Gracias por confiar en nosotros!</strong> 💕</p>
               <p>Para confirmar tu pedido, ponte en contacto con nosotros.</p>
+              <p>Teléfono: <strong>02657-511356</strong></p>
               <div className="terms-print">
                 <p><small>• Los precios están sujetos a cambios sin previo aviso</small></p>
                 <p><small>• Se requiere anticipo del 50% para confirmar el pedido</small></p>
@@ -325,6 +326,7 @@ Para confirmar tu pedido, ponte en contacto con nosotros.
           <div className="quote-footer">
             <p><strong>¡Gracias por confiar en nosotros!</strong> 💕</p>
             <p>Para confirmar tu pedido, ponte en contacto con nosotros.</p>
+            <p>Teléfono: <strong>02657-511356</strong></p>
             <div className="terms">
               <p><small>• Los precios están sujetos a cambios sin previo aviso</small></p>
               <p><small>• Se requiere anticipo del 50% para confirmar el pedido</small></p>
